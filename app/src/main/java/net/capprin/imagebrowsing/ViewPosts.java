@@ -12,15 +12,18 @@ public class ViewPosts extends Fragment {
     private String title;
     private String content;
 
+    //When view is created
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View myView = inflater.inflate(R.layout.fragment_view_posts, container, false);
 
+        //Get title and content textViews
         TextView titleView = (TextView)myView.findViewById(R.id.output_title);
         TextView contentView = (TextView)myView.findViewById(R.id.output_content);
 
+        //Set text
         titleView.setText(title);
         contentView.setText(content);
 
@@ -28,6 +31,7 @@ public class ViewPosts extends Fragment {
         return myView;
     }
 
+    //Sets arguments
     @Override
     public void setArguments(Bundle args){
         try{

@@ -10,8 +10,12 @@ import android.widget.EditText;
 
 public class CreatePost extends Fragment {
 
+    //NOTE: Callback setup not really necessary anymore; was in place when the button "post" function was present in this class. Will remain for style and learning's sake
+
+    //Points to parent activity
     private OnCreatePostListener mCallback;
 
+    //Creates layout
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -19,6 +23,7 @@ public class CreatePost extends Fragment {
         return inflater.inflate(R.layout.fragment_create_post, container, false);
     }
 
+    //When created, grabs the activity to use in callback
     public void onAttach(Activity activity){
         super.onAttach(activity);
 
@@ -30,10 +35,9 @@ public class CreatePost extends Fragment {
         }
     }
 
-
-
-    public interface OnCreatePostListener{
-        public void onCreatePost(String title, String text);
+    //Used to communicate with parent activity
+    protected interface OnCreatePostListener{
+        void onCreatePost(String title, String text);
     }
 
 }
