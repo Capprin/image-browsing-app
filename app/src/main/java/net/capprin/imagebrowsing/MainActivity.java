@@ -1,7 +1,9 @@
 package net.capprin.imagebrowsing;
 
 
+import android.app.Fragment;
 import android.graphics.Point;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,7 +20,7 @@ public class MainActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_create_post);
+        setContentView(R.layout.activity_main);
 
         //Get Screen Size
         size = new Point();
@@ -38,7 +40,7 @@ public class MainActivity extends AppCompatActivity{
             viewPosts.setArguments(getIntent().getExtras());
 
             //Add teh fragment to the container
-            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container,viewPosts).commit();
+            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container,viewPosts,"viewposts").commit();
         }
 
     }
@@ -54,8 +56,8 @@ public class MainActivity extends AppCompatActivity{
                 return true;
             case MotionEvent.ACTION_UP:
                 if (Math.abs(event.getRawX()-startX) > size.x/2){
-                    Log.d("Gestures","Swiped!");
-                    onSwipe();
+                    if (event.getRawX() > startX) onSwipeRight();
+                    else onSwipeLeft();
                 }
                 return true;
             default:
@@ -63,8 +65,16 @@ public class MainActivity extends AppCompatActivity{
         }
     }
 
-    private void onSwipe(){
+    private void onSwipeLeft(){
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container,new CreatePost(),"createpost");
+        transaction.commit();
+    }
 
+    private void onSwipeRight(){
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container,new ViewPosts(),"viewposts");
+        transaction.commit();
     }
 
 }
