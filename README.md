@@ -1,7 +1,10 @@
 # image-browsing-app
-Android app that lets you view stored images
+Simple local blogging app
 
-Redundant with the photos app, but will teach:
-- App permissions
-- Using saved data
-- UI design
+Should allow:
+- Post Creation
+- Saved Posts
+- Image Selection and Displaying
+- Swipe Between Creation and Blog (Like Snapchat!)
+
+Project to teach basic android app development
