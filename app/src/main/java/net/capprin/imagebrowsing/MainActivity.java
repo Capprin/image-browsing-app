@@ -11,11 +11,14 @@ import android.util.Log;
 import android.view.Display;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
+import android.view.View;
+import android.widget.EditText;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity implements CreatePost.OnCreatePostListener{
 
     private Point size;
     private float startX;
+    private ViewPosts viewPosts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +37,7 @@ public class MainActivity extends AppCompatActivity{
             if (savedInstanceState != null) return;
 
             //Make new fragment to put in layout
-            ViewPosts viewPosts = new ViewPosts();
+            viewPosts = new ViewPosts();
 
             //Pass instructions from an intent
             viewPosts.setArguments(getIntent().getExtras());
@@ -73,8 +76,26 @@ public class MainActivity extends AppCompatActivity{
 
     private void onSwipeRight(){
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container,new ViewPosts(),"viewposts");
+        transaction.replace(R.id.fragment_container,viewPosts,"viewposts");
         transaction.commit();
     }
 
+    public void post(View view){
+        EditText title = (EditText)findViewById(R.id.title);
+        EditText content = (EditText)findViewById(R.id.content);
+
+        onCreatePost(title.getText().toString(),content.getText().toString());
+    }
+
+    @Override
+    public void onCreatePost(String title, String text) {
+        Bundle args = new Bundle();
+        args.putString("title",title);
+        args.putString("content",text);
+        viewPosts.setArguments(args);
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, viewPosts, "viewposts");
+        transaction.commit();
+    }
 }
